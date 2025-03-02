@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fusion://debugxweb</title>
+    <style>
+        .version-error {
+            color: red;
+        }
+
+        .version-ok {
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>DebugWeb</h1>
+    <p>如果您在使用 ClassTools 时出现问题，此页面将帮助开发人员更快定位。</p>
+
+    <hr>
+
+    <div id="user-agent-container">
+        <h2>UserAgent</h2>
+        <p color="red"><strong><span id="oops"></span></strong></p>
+        <p>您的浏览器内核: <span id="browser-version">正在检测浏览器版本...</span></p>
+        <p>用户代理字符串: <span id="user-agent">正在获取UserAgent……</span></p>
+        <p id="language"></p>
+
+        <hr>
+
+        <h2>CSS / JS</h2>
+        <ul>
+            <li><span id="fetch"></span>Fetch</li> <!-- Fetch API -->
+            <li><span id="arrow-function"></span>Arrow Functions</li> <!-- 箭头函数 -->
+            <li><span id="includes"></span>Array.prototype.includes</li>  <!-- Array.prototype.includes -->
+            <li><span id="css-variables"></span>CSS Variables</li> <!-- 样式表变量 -->
+            <li><span id="clipboard"></span>Clipboard API</li> <!-- 异步剪贴板 -->
+            <li><span id="optional-chaining"></span>optional-chaining</li> <!-- 可选链操作符 -->
+            <li><span id="flexbox-gap"></span>flexbox-gap</li> <!-- 灵活布局间隙 -->
+            <li><span id="private-methods"></span>private-methods</li> <!-- 私有类方法 -->
+            <li><span id="string-replace-global"></span>String Global Replace</li> <!-- 字符串全局替换 -->
+        </ul>
+    </div>
+
+    <script>
+        // 获取浏览器的代理字符串
+        let userAgent = navigator.userAgent;
+
+        // 获取显示代理字符串的div
+        let userAgentDiv = document.getElementById('user-agent');
+
+        // 将代理字符串填入指定div中
+        userAgentDiv.textContent = userAgent;
+
+        // 获取浏览器语言设置
+        var language = navigator.language || navigator.languages[0];
+
+        // 显示语言
+        document.getElementById('language').innerText = "浏览器语言: " + language;
+
+        // 检测是否为 Wechat
+        if (userAgent.indexOf("Wechat") > -1) {
+            document.getElementById('oops').textContent = "对此页面不信任，请老师在浏览器上使用 ClassTools";
+            document.getElementById('oops').style.color = "orange"; // 修改文本颜色为橙色
+        }
+
+        function getBrowserVersion() {
+            var userAgent = navigator.userAgent;
+            var version = "未知版本";
+            var versionColorClass = "version-ok"; // 默认黑色
+
+            // 检测是否为 IE
+            if (userAgent.indexOf("MSIE") > -1 || userAgent.indexOf("Trident/") > -1) {
+                version = "您的浏览器版本过低";
+                versionColorClass = "version-error";
+            }
+            // 检测是否为 Chrome（包括 Chromium）
+            else if (userAgent.indexOf("Chrome") > -1) {
+                var versionMatch = userAgent.match(/Chrome\/([0-9]+)/);
+                if (versionMatch) {
+                    version = "谷歌 Chromium " + versionMatch[1];
+
+                    // 判断版本号，若小于132则设置为红色
+                    if (parseInt(versionMatch[1]) < 132) {
+                        versionColorClass = "version-error";
+                    }
+                }
+            }
+            // 检测是否为 Edge
+            else if (userAgent.indexOf("Edg") > -1) {
+                var versionMatch = userAgent.match(/Edg\/([0-9]+)/);
+                if (versionMatch) {
+                    version = "微软 Edge " + versionMatch[1];
+
+                    // 判断版本号，若小于132则设置为红色
+                    if (parseInt(versionMatch[1]) < 132) {
+                        versionColorClass = "version-error";
+                    }
+                }
+            }
+            // 检测是否为 Firefox
+            else if (userAgent.indexOf("Firefox") > -1) {
+                var versionMatch = userAgent.match(/Firefox\/([0-9]+)/);
+                if (versionMatch) {
+                    version = "Mozilla Firefox " + versionMatch[1];
+                }
+            }
+
+            return { version: version, colorClass: versionColorClass };
+        }
+
+        var browserInfo = getBrowserVersion();
+        document.getElementById("browser-version").textContent = browserInfo.version;
+        document.getElementById("browser-version").classList.add(browserInfo.colorClass);
+
+        // 检查各个特性
+        function checkFeatureAvailability() {
+            // Fetch API
+            if (typeof fetch !== 'undefined') {
+                document.getElementById('fetch').innerText = "✅";
+            } else {
+                document.getElementById('fetch').innerText = "🤔";
+            }
+
+            // 箭头函数
+            try {
+                new Function('()=>{}');  // 尝试创建箭头函数
+                document.getElementById('arrow-function').innerText = "✅";
+            } catch (e) {
+                document.getElementById('arrow-function').innerText = "🤔";
+            }
+
+            // Array.prototype.includes
+            if (Array.prototype.includes) {
+                document.getElementById('includes').innerText = "✅";
+            } else {
+                document.getElementById('includes').innerText = "🤔";
+            }
+
+            // CSS 变量支持
+            var testElement = document.createElement('div');
+            testElement.style.setProperty('--test', '1px');
+            if (testElement.style.getPropertyValue('--test') === '1px') {
+                document.getElementById('css-variables').innerText = "✅";
+            } else {
+                document.getElementById('css-variables').innerText = "🤔";
+            }
+
+            // 异步剪贴板支持
+            if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+                document.getElementById('clipboard').innerText = "✅";
+            } else {
+                document.getElementById('clipboard').innerText = "🤔";
+            }
+        }
+
+        // 可选链操作符检测
+        function checkOptionalChaining() {
+            try {
+                const obj = { foo: { bar: { baz: 42 } } };
+                return obj?.foo?.bar?.baz ? '✅' : '🤔';
+            } catch (e) {
+                return '🤔';
+            }
+        }
+
+        // 灵活布局间隙检测
+        function checkFlexboxGap() {
+            const div = document.createElement('div');
+            div.style.display = 'flex';
+            div.style.gap = '10px';
+            return div.style.gap === '10px' ? '✅' : '🤔';
+        }
+
+        // 私有类方法检测
+        function checkPrivateMethods() {
+            try {
+                class MyClass {
+                    #privateMethod() { return 'private'; }
+                    test() { return this.#privateMethod(); }
+                }
+                const obj = new MyClass();
+                obj.test(); // 访问私有方法
+                return '✅';
+            } catch (e) {
+                return '🤔';
+            }
+        }
+
+        // 字符串全局替换检测
+        function checkStringReplaceGlobal() {
+            const str = 'hello world hello';
+            const result = str.replace(/hello/g, 'hi');
+            return result === 'hi world hi' ? '✅' : '🤔';
+        }
+
+        // 调用函数检查支持
+
+        // 延迟一秒半显示所有特性的检测结果
+        let delay = 1500; // 初始延迟时间为1.5秒
+
+        setTimeout(() => {
+            // Fetch API
+            if (typeof fetch !== 'undefined') {
+                document.getElementById('fetch').innerText = "✅";
+            } else {
+                document.getElementById('fetch').innerText = "🤔";
+            }
+        }, delay);
+
+        delay += 500; // 每个特性检测结果延迟500毫秒显示
+
+        setTimeout(() => {
+            // 箭头函数
+            try {
+                new Function('()=>{}');  // 尝试创建箭头函数
+                document.getElementById('arrow-function').innerText = "✅";
+            } catch (e) {
+                document.getElementById('arrow-function').innerText = "🤔";
+            }
+        }, delay);
+
+        delay += 500;
+
+        setTimeout(() => {
+            // Array.prototype.includes
+            if (Array.prototype.includes) {
+                document.getElementById('includes').innerText = "✅";
+            } else {
+                document.getElementById('includes').innerText = "🤔";
+            }
+        }, delay);
+
+        delay += 500;
+
+        setTimeout(() => {
+            // CSS 变量支持
+            var testElement = document.createElement('div');
+            testElement.style.setProperty('--test', '1px');
+            if (testElement.style.getPropertyValue('--test') === '1px') {
+                document.getElementById('css-variables').innerText = "✅";
+            } else {
+                document.getElementById('css-variables').innerText = "🤔";
+            }
+        }, delay);
+
+        delay += 500;
+
+        setTimeout(() => {
+            // 异步剪贴板支持
+            if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+                document.getElementById('clipboard').innerText = "✅";
+            } else {
+                document.getElementById('clipboard').innerText = "🤔";
+            }
+        }, delay);
+
+        delay += 500;
+
+        setTimeout(() => {
+            // 可选链操作符检测
+            document.getElementById('optional-chaining').textContent = checkOptionalChaining();
+            document.getElementById('optional-chaining').classList.add(checkOptionalChaining() === '✅' ? 'success' : 'error');
+        }, delay);
+
+        delay += 500;
+
+        setTimeout(() => {
+            // 灵活布局间隙检测
+            document.getElementById('flexbox-gap').textContent = checkFlexboxGap();
+            document.getElementById('flexbox-gap').classList.add(checkFlexboxGap() === '✅' ? 'success' : 'error');
+        }, delay);
+
+        delay += 500;
+
+        setTimeout(() => {
+            // 私有类方法检测
+            document.getElementById('private-methods').textContent = checkPrivateMethods();
+            document.getElementById('private-methods').classList.add(checkPrivateMethods() === '✅' ? 'success' : 'error');
+        }, delay);
+
+        delay += 500;
+
+        setTimeout(() => {
+            // 字符串全局替换检测
+            document.getElementById('string-replace-global').textContent = checkStringReplaceGlobal();
+            document.getElementById('string-replace-global').classList.add(checkStringReplaceGlobal() === '✅' ? 'success' : 'error');
+        }, delay);
+    </script>
+
+</body>
+
+</html>
