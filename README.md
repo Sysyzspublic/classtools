@@ -1,4 +1,4 @@
-# classtools
-适用于一体机大屏的上课授课小工具
-
-适用于一体机的独立应用程序使用 WebView2 网页套壳实现，不存在任何信息收集。
+<div align="center">
+<h1><image src="https://img.icons8.com/?size=512&id=Vh44ppGKSLoR&format=png" height="28"/>  ClassTools</h1>
+ClassTools 是一款适用于一体机的课堂辅助工具，帮助老师活跃课堂气氛。
+</div>
