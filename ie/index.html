@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邵阳市第一中学校园公共服务|ClassTools</title>
+    <style>
+        @media screen and (max-width: 768px) {
+            .info-box {
+                width: 100%;
+            }
+        }
+
+        body {
+            /* 维护代码开始 */
+            position: relative;
+            min-height: 100vh;
+            /* 使用视口高度确保覆盖整个页面 */
+            margin: 0;
+        }
+
+        /* 创建一个覆盖整个页面的透明层 */
+        .unclickable-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0);
+            /* 完全透明 */
+            z-index: 1000;
+            /* 确保它位于其他所有元素之上 */
+        }
+
+        /* 维护代码结束 */
+
+        .bold-text {
+            font-weight: bold;
+        }
+
+        .button {
+            display: inline-block;
+            width: 150px;
+            /* 设置固定宽度 */
+            text-align: center;
+            padding: 10px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            background-color: #2775b6;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+
+        .button:hover {
+            background-color: #2775b6;
+            text-decoration: none;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: write;
+            /* 设置背景颜色 */
+        }
+
+        body {
+            user-select: none;
+            /* 禁止文字选择 */
+            -webkit-user-select: none;
+            /* 禁止文字选择 */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: black;
+            /* 设置标题文字颜色 */
+        }
+
+        .nav {
+            margin-bottom: 20px;
+        }
+
+        .nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav li {
+            margin-right: 10px;
+        }
+
+        .notice {
+            border: 2px solid black;
+            /* 设置边框颜色 */
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 20px;
+            color: black;
+            /* 设置文字颜色 */
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .info-box {
+            border: 2px solid black;
+            /* 设置信息框边框颜色 */
+            border-radius: 10px;
+            padding: 10px;
+            width: calc(50% - 20px);
+            height: 200px;
+            color: black;
+            /* 设置信息框文字颜色 */
+        }
+
+        .info-gap {
+            width: 20px;
+        }
+
+        .extra-info-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .extra-info-box {
+            border: 2px solid black;
+            /* 设置信息框边框颜色 */
+            border-radius: 10px;
+            padding: 10px;
+            width: calc(33.33% - 20px);
+            height: 200px;
+            margin-bottom: 40px;
+            color: black;
+            /* 设置信息框文字颜色 */
+        }
+
+        .vertical-info-box {
+            border: 2px solid black;
+            /* 设置竖排信息框边框颜色 */
+            border-radius: 10px;
+            padding: 10px;
+            width: calc(50% - 20px);
+            height: 200px;
+            color: black;
+            /* 设置竖排信息框文字颜色 */
+        }
+
+        .vertical-info-gap {
+            height: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: black;
+            /* 设置页脚文字颜色为 */
+        }
+
+        .info-box {
+            height: auto;
+        }
+
+        .info-column {
+            align-items: flex-start;
+        }
+
+        .right-align {
+            text-align: right;
+        }
+
+        a:link {
+            color: white;
+            /* 设置链接文字颜色为 */
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: white;
+            /* 设置已访问链接文字颜色 */
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ClassToolsIE</h1>
+        </div>
+
+        <div class="notice">
+            <h2><span id="greeting"></span></h2>
+            <p>老师您好，您正在使用 IE 兼容版本，请在下方查找所需工具。</p>
+            <p><span class="bold-text">Version：IEEAPP-20250302-Build1</span></p> <!-- Version -->
+            <h6><span class="bold-text">程序页面由 <a href="https://sysyzspublic.github.io/" target="_blank"
+                        style="color: black">邵阳市第一中学校园公共服务</a> 提供技术支持</span></h6>
+            <p><span class="bold-text" style="color: #2775b6;"></span></p>
+        </div>
+
+        <div class="notice">
+            <h2>内置工具</h2>
+            <p>
+                <a href="base-converter.html" class="button">数字进制转换</a>
+            </p>
+        </div>
+
+        <div class="notice">
+            <h2>Fusion</h2>
+            <p>请在社团开发人员引导下使用工具。</p>
+            <p>
+                不可用
+            </p>
+        </div>
+        <script src="https://sysyz-itcom.github.io/docs/components/js/time-greeting.js"></script> <!-- 时间问候组件 -->
+    </div>
+</body>
+
+</html>
